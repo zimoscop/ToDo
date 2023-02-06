@@ -43,21 +43,9 @@ function addList() {
   divCross.append(pCross);
   div.append(checkbox, p, divCross);
   lists.append(div);
-  btnDel.addEventListener("click", () => {
-    const complited = document.querySelectorAll(".complited");
-    for (let el in complited) {
-      complited[el].parentNode.removeChild(complited[el]);
-    }
-  });
-  //  for (let i = 0; i < localStorage.length; i++) {
-  //   if (delText ===localStorage.getItem(localStorage.key(i))) {
-  //     localStorage.removeItem(localStorage.key(i));
-  // }
-  // }
-
-  // });
   return lists;
 }
+
 btnAdd.addEventListener("click", addList);
 
 function getFromLs() {
@@ -84,3 +72,21 @@ function delAll() {
   }
 }
 btnDelAll.addEventListener("click", delAll);
+
+function delComplited() {
+  const complited = document.querySelectorAll(".complited");
+  const complited2 = document.querySelectorAll("div.complited>p");
+  let arrC = [];
+  for (let i = 0; i < complited2.length; i++) {
+    arrC.push(complited2[i].textContent);
+  }
+  for (let i = 0; i < localStorage.length; i++) {
+    if (arrC.includes(localStorage.getItem(localStorage.key(i))) === true) {
+      localStorage.removeItem(localStorage.key(i));
+    }
+  }
+  for (let el in complited) {
+    complited[el].parentNode.removeChild(complited[el]);
+  }
+}
+btnDel.addEventListener("click", delComplited);

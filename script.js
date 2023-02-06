@@ -8,19 +8,10 @@ const cross = document.querySelector(".cross");
 const checkbox = document.querySelector(".checkbox");
 const text = document.querySelector(".text");
 
-function getFromLs() {
-  for (let i = 0; i < localStorage.length; i++) {
-    input.value = localStorage.getItem(localStorage.key(i));
-    addList();
-  }
-}
-
 window.addEventListener("load", getFromLs);
-
-// function checked() {
-//   text.classList.toggle("done");
-//   // надо чтоб все зачеркивались
-// }
+window.addEventListener("load", () => {
+  input.value = "";
+});
 
 function addList() {
   let text = input.value;
@@ -31,6 +22,7 @@ function addList() {
   checkbox.type = "checkbox";
   checkbox.addEventListener("change", () => {
     p.classList.toggle("done");
+    div.classList.toggle("complited");
   });
   const p = document.createElement("p");
   p.className = "text";
@@ -46,8 +38,22 @@ function addList() {
   divCross.append(pCross);
   div.append(checkbox, p, divCross);
   lists.append(div);
+  btnDel.addEventListener("click", () => {
+    const elems = document.querySelectorAll(".complited");
+    for (let elem in elems) {
+      elems[elem].parentNode.removeChild(elems[elem]);
+    }
+  });
+  return lists;
 }
 btnAdd.addEventListener("click", addList);
+
+function getFromLs() {
+  for (let i = 0; i < localStorage.length; i++) {
+    input.value = localStorage.getItem(localStorage.key(i));
+    addList();
+  }
+}
 
 function saveInLocalStorage() {
   let d = new Date();
@@ -58,13 +64,6 @@ function saveInLocalStorage() {
 }
 btnAdd.addEventListener("click", saveInLocalStorage);
 
-// function delList() {
-//   list.style = "display:none";
-//   // localStorage.clear("key");
-//   // надо удалить в LSt только одно значение
-// }
-// cross.addEventListener("click", delList);
-
 function delAll() {
   let res = confirm("Новая жизнь с нового листа?");
   if (res === true) {
@@ -73,12 +72,3 @@ function delAll() {
   }
 }
 btnDelAll.addEventListener("click", delAll);
-
-// function getFromLs() {
-//   for (let i = 0; i < localStorage.length; i++) {
-//     input.value = localStorage.getItem(localStorage.key(i));
-//     addList();
-//   }
-// }
-
-// window.addEventListener("load", getFromLs);

@@ -8,14 +8,19 @@ const cross = document.querySelector(".cross");
 const checkbox = document.querySelector(".checkbox");
 const text = document.querySelector(".text");
 
-function delAll() {
-  let res = confirm("Новая жизнь с нового листа?");
-  if (res === true) {
-    lists.style = "display: none";
-    localStorage.clear();
+function getFromLs() {
+  for (let i = 0; i < localStorage.length; i++) {
+    input.value = localStorage.getItem(localStorage.key(i));
+    addList();
   }
 }
-btnDelAll.addEventListener("click", delAll);
+
+window.addEventListener("load", getFromLs);
+
+// function checked() {
+//   text.classList.toggle("done");
+//   // надо чтоб все зачеркивались
+// }
 
 function addList() {
   let text = input.value;
@@ -24,6 +29,9 @@ function addList() {
   const checkbox = document.createElement("input");
   checkbox.className = "checkbox mark";
   checkbox.type = "checkbox";
+  checkbox.addEventListener("change", () => {
+    p.classList.toggle("done");
+  });
   const p = document.createElement("p");
   p.className = "text";
   p.textContent = text;
@@ -32,24 +40,14 @@ function addList() {
   const pCross = document.createElement("p");
   pCross.className = "cross__symbol";
   pCross.textContent = "❌";
+  divCross.addEventListener("click", () => {
+    div.style = "display:none;";
+  });
   divCross.append(pCross);
   div.append(checkbox, p, divCross);
   lists.append(div);
 }
 btnAdd.addEventListener("click", addList);
-
-function delList() {
-  list.style = "display:none";
-  // localStorage.clear("key");
-
-  // надо удалить в LSt только одно значение
-}
-cross.addEventListener("click", delList);
-
-checkbox.addEventListener("change", () => {
-  text.classList.toggle("done");
-  // надо чтоб все зачеркивались
-});
 
 function saveInLocalStorage() {
   let d = new Date();
@@ -60,11 +58,27 @@ function saveInLocalStorage() {
 }
 btnAdd.addEventListener("click", saveInLocalStorage);
 
-function getFromLs() {
-  for (let i = 0; i < localStorage.length; i++) {
-    input.value = localStorage.getItem(localStorage.key(i));
-    addList();
+// function delList() {
+//   list.style = "display:none";
+//   // localStorage.clear("key");
+//   // надо удалить в LSt только одно значение
+// }
+// cross.addEventListener("click", delList);
+
+function delAll() {
+  let res = confirm("Новая жизнь с нового листа?");
+  if (res === true) {
+    lists.style = "display: none";
+    localStorage.clear();
   }
 }
+btnDelAll.addEventListener("click", delAll);
 
-window.addEventListener("load", getFromLs);
+// function getFromLs() {
+//   for (let i = 0; i < localStorage.length; i++) {
+//     input.value = localStorage.getItem(localStorage.key(i));
+//     addList();
+//   }
+// }
+
+// window.addEventListener("load", getFromLs);

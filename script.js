@@ -9,9 +9,12 @@ const checkbox = document.querySelector(".checkbox");
 const text = document.querySelector(".text");
 
 function delAll() {
-  lists.style = "display: none";
+  let res = confirm("Новая жизнь с нового листа?");
+  if (res === true) {
+    lists.style = "display: none";
+    localStorage.clear();
+  }
 }
-
 btnDelAll.addEventListener("click", delAll);
 
 function addList() {
@@ -27,7 +30,7 @@ function addList() {
   const divCross = document.createElement("div");
   divCross.className = "cross";
   const pCross = document.createElement("p");
-  pCross.style = "width: 16px; height: 16px; font-size: 14px;";
+  pCross.className = "cross__symbol";
   pCross.textContent = "❌";
   divCross.append(pCross);
   div.append(checkbox, p, divCross);
@@ -37,9 +40,31 @@ btnAdd.addEventListener("click", addList);
 
 function delList() {
   list.style = "display:none";
+  // localStorage.clear("key");
+
+  // надо удалить в LSt только одно значение
 }
 cross.addEventListener("click", delList);
 
 checkbox.addEventListener("change", () => {
   text.classList.toggle("done");
+  // надо чтоб все зачеркивались
 });
+
+function saveInLocalStorage() {
+  let d = new Date();
+  let dReal = d.toLocaleTimeString();
+  let realTime = "case" + dReal;
+  localStorage.setItem(realTime, input.value);
+  input.value = "";
+}
+btnAdd.addEventListener("click", saveInLocalStorage);
+
+function getFromLs() {
+  for (let i = 0; i < localStorage.length; i++) {
+    input.value = localStorage.getItem(localStorage.key(i));
+    addList();
+  }
+}
+
+window.addEventListener("load", getFromLs);

@@ -20,6 +20,7 @@ h1 {
   font-size: 58px;
   text-align: center;
   color: black;
+  cursor: pointer;
 }
 
 button {
@@ -106,6 +107,12 @@ input:active,
   width: 20px;
   height: 20px;
   cursor: pointer;
+}
+
+.cross__symbol {
+  width: 16px;
+  height: 16px;
+  font-size: 14px;
 }
 
 .base {

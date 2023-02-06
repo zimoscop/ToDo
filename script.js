@@ -16,34 +16,46 @@ window.addEventListener("load", () => {
 function addList() {
   let text = input.value;
   const div = document.createElement("div");
-  div.className = "list";
   const checkbox = document.createElement("input");
+  const p = document.createElement("p");
+  const divCross = document.createElement("div");
+  const pCross = document.createElement("p");
+  div.className = "list";
   checkbox.className = "checkbox mark";
   checkbox.type = "checkbox";
   checkbox.addEventListener("change", () => {
     p.classList.toggle("done");
     div.classList.toggle("complited");
   });
-  const p = document.createElement("p");
   p.className = "text";
   p.textContent = text;
-  const divCross = document.createElement("div");
   divCross.className = "cross";
-  const pCross = document.createElement("p");
   pCross.className = "cross__symbol";
   pCross.textContent = "❌";
   divCross.addEventListener("click", () => {
     div.style = "display:none;";
+    for (let i = 0; i < localStorage.length; i++) {
+      if (localStorage.getItem(localStorage.key(i)) === text) {
+        localStorage.removeItem(localStorage.key(i));
+      }
+    }
   });
   divCross.append(pCross);
   div.append(checkbox, p, divCross);
   lists.append(div);
   btnDel.addEventListener("click", () => {
-    const elems = document.querySelectorAll(".complited");
-    for (let elem in elems) {
-      elems[elem].parentNode.removeChild(elems[elem]);
+    const complited = document.querySelectorAll(".complited");
+    for (let el in complited) {
+      complited[el].parentNode.removeChild(complited[el]);
     }
   });
+  //  for (let i = 0; i < localStorage.length; i++) {
+  //   if (delText ===localStorage.getItem(localStorage.key(i))) {
+  //     localStorage.removeItem(localStorage.key(i));
+  // }
+  // }
+
+  // });
   return lists;
 }
 btnAdd.addEventListener("click", addList);
@@ -65,7 +77,7 @@ function saveInLocalStorage() {
 btnAdd.addEventListener("click", saveInLocalStorage);
 
 function delAll() {
-  let res = confirm("Новая жизнь с нового листа?");
+  let res = confirm("Новая жизнь с чистого листа?");
   if (res === true) {
     lists.style = "display: none";
     localStorage.clear();

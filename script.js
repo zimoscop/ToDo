@@ -73,20 +73,29 @@ function delAll() {
 }
 btnDelAll.addEventListener("click", delAll);
 
-function delComplited() {
-  const complited = document.querySelectorAll(".complited");
-  const complited2 = document.querySelectorAll("div.complited>p");
-  let arrC = [];
-  for (let i = 0; i < complited2.length; i++) {
-    arrC.push(complited2[i].textContent);
-  }
-  for (let i = 0; i < localStorage.length; i++) {
-    if (arrC.includes(localStorage.getItem(localStorage.key(i))) === true) {
-      localStorage.removeItem(localStorage.key(i));
-    }
-  }
-  for (let el in complited) {
-    complited[el].parentNode.removeChild(complited[el]);
+function delComplitedList() {
+  const complited = document.querySelectorAll("div.complited");
+  for (let i = 0; i < complited.length; i++) {
+    document.querySelector(".complited").remove();
   }
 }
-btnDel.addEventListener("click", delComplited);
+
+function cleanLsItem() {
+  const complited2 = document.querySelectorAll("div.complited>p");
+  let complitedCases = [];
+  for (let i = 0; i < complited2.length; i++) {
+    complitedCases.push(complited2[i].textContent);
+  }
+  let arr = [...complitedCases];
+  console.log(arr);
+  for (let i = 0; i < localStorage.length; i++) {
+    if (arr.indexOf(localStorage.getItem(localStorage.key(i))) !== -1) {
+      console.log(localStorage.getItem(localStorage.key(i)));
+      localStorage.removeItem(localStorage.key(i));
+      console.log(localStorage.length);
+    }
+  }
+}
+
+btnDel.addEventListener("click", delComplitedList);
+btnDel.addEventListener("mousedown", cleanLsItem);

@@ -95,11 +95,16 @@ function cleanLsItem() {
   }
   let arr = [...complitedCases];
   console.log(arr);
+  let numOfChecks = arr.length;
+
   for (let i = 0; i < localStorage.length; i++) {
-    if (arr.indexOf(localStorage.getItem(localStorage.key(i))) !== -1) {
-      console.log(localStorage.getItem(localStorage.key(i)));
-      localStorage.removeItem(localStorage.key(i));
-      console.log(localStorage.length);
+    let keyLs = localStorage.key(i);
+    let valueLs = localStorage.getItem(localStorage.key(i));
+    // numOfChecks = arr.length
+    if (arr.indexOf(valueLs) !== -1) {
+      console.log(valueLs);
+      localStorage.removeItem(keyLs);
+      // console.log(localStorage.length);
     }
   }
 }

@@ -14,6 +14,11 @@ window.addEventListener("load", getFromLs);
 window.addEventListener("load", () => {
   input.value = "";
 });
+window.addEventListener("load", () => {
+  if ((lists.style = "padding: 32px 24px 32px 24px;")) {
+    openBase();
+  }
+});
 
 // создает строку todo-листа с обработчиками закрытия по крестику и выделение завершенных
 function addList() {
@@ -71,8 +76,10 @@ function saveInLocalStorage() {
   let d = new Date();
   let dReal = d.toLocaleTimeString();
   let realTime = "case" + dReal;
-  localStorage.setItem(realTime, input.value);
-  input.value = "";
+  if (input.value !== "") {
+    localStorage.setItem(realTime, input.value);
+    input.value = "";
+  }
 }
 btnAdd.addEventListener("click", saveInLocalStorage);
 
@@ -82,6 +89,7 @@ function delAll() {
   if (res === true) {
     lists.style = "display: none";
     localStorage.clear();
+    base.style = "opacity: 0;";
   }
 }
 btnDelAll.addEventListener("click", delAll);

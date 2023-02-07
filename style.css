@@ -47,7 +47,7 @@ input:active,
 }
 
 .roof {
-  border-bottom: 1 px solid rgba(222, 226, 230, 1);
+  /* border-bottom: 1 px solid rgb(157, 159, 161); */
   background-color: rgba(255, 255, 255, 1);
   border-radius: 16px 16px 0 0;
   padding: 24px 24px 24px 24px;
@@ -73,9 +73,11 @@ input:active,
 
 .lists {
   background-color: rgba(255, 255, 255, 1);
-  padding: 32px 24px 32px 24px;
+  /* padding: 32px 24px 32px 24px; */
+  padding: 0 24px 0 24px;
   display: flex;
   flex-direction: column;
+  border-top: 1px solid rgba(222, 226, 230, 1);
 }
 
 .list {
@@ -121,6 +123,7 @@ input:active,
   display: flex;
   justify-content: space-between;
   border-radius: 0 0 16px 16px;
+  opacity: 0;
 }
 
 .base__del {

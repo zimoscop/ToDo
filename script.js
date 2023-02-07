@@ -7,6 +7,7 @@ const list = document.querySelector(".list");
 const cross = document.querySelector(".cross");
 const checkbox = document.querySelector(".checkbox");
 const text = document.querySelector(".text");
+const base = document.querySelector(".base");
 
 // загрузка страницы, достает данные из lS и очищает поле input
 window.addEventListener("load", getFromLs);
@@ -44,11 +45,18 @@ function addList() {
   });
   divCross.append(pCross);
   div.append(checkbox, p, divCross);
+  lists.style = "padding: 32px 24px 32px 24px;";
   lists.append(div);
   return lists;
 }
 
 btnAdd.addEventListener("click", addList);
+
+// отображает блок с кнопками
+function openBase() {
+  base.style = "opacity: 1;";
+}
+btnAdd.addEventListener("click", openBase);
 
 // достает данные из LS(используется при загрузке и перезагрузке страницы)
 function getFromLs() {
@@ -95,16 +103,19 @@ function cleanLsItem() {
   }
   let arr = [...complitedCases];
   console.log(arr);
-  let numOfChecks = arr.length;
+  // let numOfChecks = arr.length;
+  let numOfChecks = localStorage.length;
 
-  for (let i = 0; i < localStorage.length; i++) {
+  for (let i = 0; i < numOfChecks; i++) {
     let keyLs = localStorage.key(i);
     let valueLs = localStorage.getItem(localStorage.key(i));
     // numOfChecks = arr.length
     if (arr.indexOf(valueLs) !== -1) {
       console.log(valueLs);
       localStorage.removeItem(keyLs);
-      // console.log(localStorage.length);
+      numOfChecks--;
+      console.log(localStorage.length);
+      console.log(numOfChecks);
     }
   }
 }

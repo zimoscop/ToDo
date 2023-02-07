@@ -8,11 +8,13 @@ const cross = document.querySelector(".cross");
 const checkbox = document.querySelector(".checkbox");
 const text = document.querySelector(".text");
 
+// загрузка страницы, достает данные из lS и очищает поле input
 window.addEventListener("load", getFromLs);
 window.addEventListener("load", () => {
   input.value = "";
 });
 
+// создает строку todo-листа с обработчиками закрытия по крестику и выделение завершенных
 function addList() {
   let text = input.value;
   const div = document.createElement("div");
@@ -48,6 +50,7 @@ function addList() {
 
 btnAdd.addEventListener("click", addList);
 
+// достает данные из LS(используется при загрузке и перезагрузке страницы)
 function getFromLs() {
   for (let i = 0; i < localStorage.length; i++) {
     input.value = localStorage.getItem(localStorage.key(i));
@@ -55,6 +58,7 @@ function getFromLs() {
   }
 }
 
+//сохраняет знаение input в lS
 function saveInLocalStorage() {
   let d = new Date();
   let dReal = d.toLocaleTimeString();
@@ -64,6 +68,7 @@ function saveInLocalStorage() {
 }
 btnAdd.addEventListener("click", saveInLocalStorage);
 
+// удаляет список дел и очищает хранилище
 function delAll() {
   let res = confirm("Новая жизнь с чистого листа?");
   if (res === true) {
@@ -73,6 +78,7 @@ function delAll() {
 }
 btnDelAll.addEventListener("click", delAll);
 
+// удаляет список завершенных дел
 function delComplitedList() {
   const complited = document.querySelectorAll("div.complited");
   for (let i = 0; i < complited.length; i++) {
@@ -80,6 +86,7 @@ function delComplitedList() {
   }
 }
 
+// очищает хранилище от значений, соответвующих тексту, завершенных дел(!!!исправить: периодически удаляет не все значения, поэтому оставлены console.log )
 function cleanLsItem() {
   const complited2 = document.querySelectorAll("div.complited>p");
   let complitedCases = [];

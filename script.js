@@ -9,17 +9,6 @@ const checkbox = document.querySelector(".checkbox");
 const text = document.querySelector(".text");
 const base = document.querySelector(".base");
 
-// загрузка страницы, достает данные из lS и очищает поле input
-window.addEventListener("load", getFromLs);
-window.addEventListener("load", () => {
-  input.value = "";
-});
-window.addEventListener("load", () => {
-  if ((lists.style = "padding: 32px 24px 32px 24px;")) {
-    openBase();
-  }
-});
-
 // создает строку todo-листа с обработчиками закрытия по крестику и выделение завершенных
 
 function addList() {
@@ -57,8 +46,18 @@ function addList() {
   }
   return lists;
 }
-
 btnAdd.addEventListener("click", addList);
+
+// загрузка страницы, достает данные из lS и очищает поле input
+window.addEventListener("load", getFromLs);
+window.addEventListener("load", () => {
+  input.value = "";
+});
+window.addEventListener("load", () => {
+  if ((lists.style = "padding: 32px 24px 32px 24px;")) {
+    openBase();
+  }
+});
 
 // проверка пустого содержимого input и выдает какое-то сообщение
 function emptyInput() {

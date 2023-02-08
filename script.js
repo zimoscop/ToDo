@@ -21,41 +21,53 @@ window.addEventListener("load", () => {
 });
 
 // создает строку todo-листа с обработчиками закрытия по крестику и выделение завершенных
+
 function addList() {
-  let text = input.value;
-  const div = document.createElement("div");
-  const checkbox = document.createElement("input");
-  const p = document.createElement("p");
-  const divCross = document.createElement("div");
-  const pCross = document.createElement("p");
-  div.className = "list";
-  checkbox.className = "checkbox mark";
-  checkbox.type = "checkbox";
-  checkbox.addEventListener("change", () => {
-    p.classList.toggle("done");
-    div.classList.toggle("complited");
-  });
-  p.className = "text";
-  p.textContent = text;
-  divCross.className = "cross";
-  pCross.className = "cross__symbol";
-  pCross.textContent = "❌";
-  divCross.addEventListener("click", () => {
-    div.style = "display:none;";
-    for (let i = 0; i < localStorage.length; i++) {
-      if (localStorage.getItem(localStorage.key(i)) === text) {
-        localStorage.removeItem(localStorage.key(i));
+  if (input.value !== "") {
+    let text = input.value;
+    const div = document.createElement("div");
+    const checkbox = document.createElement("input");
+    const p = document.createElement("p");
+    const divCross = document.createElement("div");
+    const pCross = document.createElement("p");
+    div.className = "list";
+    checkbox.className = "checkbox mark";
+    checkbox.type = "checkbox";
+    checkbox.addEventListener("change", () => {
+      p.classList.toggle("done");
+      div.classList.toggle("complited");
+    });
+    p.className = "text";
+    p.textContent = text;
+    divCross.className = "cross";
+    pCross.className = "cross__symbol";
+    pCross.textContent = "❌";
+    divCross.addEventListener("click", () => {
+      div.style = "display:none;";
+      for (let i = 0; i < localStorage.length; i++) {
+        if (localStorage.getItem(localStorage.key(i)) === text) {
+          localStorage.removeItem(localStorage.key(i));
+        }
       }
-    }
-  });
-  divCross.append(pCross);
-  div.append(checkbox, p, divCross);
-  lists.style = "padding: 32px 24px 32px 24px;";
-  lists.append(div);
+    });
+    divCross.append(pCross);
+    div.append(checkbox, p, divCross);
+    lists.style = "padding: 32px 24px 32px 24px;";
+    lists.append(div);
+  }
   return lists;
 }
 
 btnAdd.addEventListener("click", addList);
+
+// проверка пустого содержимого input!!!!Это надо совместить с созданием листа!!!!
+function emptyInput() {
+  if (input.value === "") {
+    alert("Полить кактус и погулять с собакой?");
+    // alert("тут должно было быть очень важное дело, но я его не помню");
+  }
+}
+btnAdd.addEventListener("click", emptyInput);
 
 // отображает блок с кнопками
 function openBase() {
@@ -110,20 +122,25 @@ function cleanLsItem() {
     complitedCases.push(complited2[i].textContent);
   }
   let arr = [...complitedCases];
-  console.log(arr);
-  // let numOfChecks = arr.length;
   let numOfChecks = localStorage.length;
+  let terminalLengthLs = numOfChecks - arr.length;
 
-  for (let i = 0; i < numOfChecks; i++) {
+  for (let i = -1; i < numOfChecks; i++) {
     let keyLs = localStorage.key(i);
-    let valueLs = localStorage.getItem(localStorage.key(i));
-    // numOfChecks = arr.length
+    let valueLs = localStorage.getItem(keyLs);
     if (arr.indexOf(valueLs) !== -1) {
-      console.log(valueLs);
       localStorage.removeItem(keyLs);
       numOfChecks--;
-      console.log(localStorage.length);
-      console.log(numOfChecks);
+    }
+  }
+  if (localStorage.length > terminalLengthLs) {
+    for (let i = -1; i < numOfChecks; i++) {
+      let keyLs = localStorage.key(i);
+      let valueLs = localStorage.getItem(keyLs);
+      if (arr.indexOf(valueLs) !== -1) {
+        localStorage.removeItem(keyLs);
+        numOfChecks--;
+      }
     }
   }
 }

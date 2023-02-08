@@ -41,7 +41,8 @@ function addList() {
     });
     divCross.append(pCross);
     div.append(checkbox, p, divCross);
-    lists.style = "padding: 32px 24px 32px 24px;";
+    lists.style = "padding: 32px 24px;";
+    document.querySelector(".roof").style = "border-radius: 16px 16px 0 0";
     lists.append(div);
   }
   return lists;
@@ -54,14 +55,16 @@ window.addEventListener("load", () => {
   input.value = "";
 });
 window.addEventListener("load", () => {
-  if ((lists.style = "padding: 32px 24px 32px 24px;")) {
+  if ((lists.style = "padding: 32px 24px;")) {
     openBase();
+    document.querySelector(".roof").style = "border-radius: 16px 16px 0 0";
   }
 });
 
 // проверка пустого содержимого input и выдает какое-то сообщение
 function emptyInput() {
   if (input.value === "") {
+    document.querySelector(".roof").style = "border-radius: 16px 16px 0 0";
     alert("Полить кактус и погулять с собакой?");
     // alert("тут должно было быть очень важное дело, но я его не помню");
   }
@@ -101,6 +104,7 @@ function delAll() {
     lists.style = "display: none";
     localStorage.clear();
     base.style = "opacity: 0;";
+    document.querySelector(".roof").style = "border-radius: 16px";
   }
 }
 btnDelAll.addEventListener("click", delAll);

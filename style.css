@@ -49,8 +49,8 @@ input:active,
 .roof {
   /* border-bottom: 1 px solid rgb(157, 159, 161); */
   background-color: rgba(255, 255, 255, 1);
-  border-radius: 16px 16px 0 0;
-  padding: 24px 24px 24px 24px;
+  border-radius: 16px;
+  padding: 24px;
   height: 86px;
   display: flex;
   justify-content: space-between;

@@ -60,7 +60,7 @@ function addList() {
 
 btnAdd.addEventListener("click", addList);
 
-// проверка пустого содержимого input!!!!Это надо совместить с созданием листа!!!!
+// проверка пустого содержимого input и выдает какое-то сообщение
 function emptyInput() {
   if (input.value === "") {
     alert("Полить кактус и погулять с собакой?");
@@ -83,7 +83,7 @@ function getFromLs() {
   }
 }
 
-//сохраняет знаение input в lS
+//сохраняет значение input в lS
 function saveInLocalStorage() {
   let d = new Date();
   let dReal = d.toLocaleTimeString();
@@ -95,7 +95,7 @@ function saveInLocalStorage() {
 }
 btnAdd.addEventListener("click", saveInLocalStorage);
 
-// удаляет список дел и очищает хранилище
+// удаляет весь список дел и очищает всё хранилище
 function delAll() {
   let res = confirm("Новая жизнь с чистого листа?");
   if (res === true) {
@@ -106,7 +106,7 @@ function delAll() {
 }
 btnDelAll.addEventListener("click", delAll);
 
-// удаляет список завершенных дел
+// удаляет список завершенных дел из листа на странице браузера
 function delComplitedList() {
   const complited = document.querySelectorAll("div.complited");
   for (let i = 0; i < complited.length; i++) {
@@ -114,7 +114,7 @@ function delComplitedList() {
   }
 }
 
-// очищает хранилище от значений, соответвующих тексту, завершенных дел(!!!исправить: периодически удаляет не все значения, поэтому оставлены console.log )
+// очищает хранилище от значений, соответвующих тексту, завершенных дел
 function cleanLsItem() {
   const complited2 = document.querySelectorAll("div.complited>p");
   let complitedCases = [];
@@ -123,6 +123,7 @@ function cleanLsItem() {
   }
   let arr = [...complitedCases];
   let numOfChecks = localStorage.length;
+  // какой длины после проверки должно остаться хранилище, переменная понадобится для дополнительного цикла (удаление завершенного), так как одним циклом for не могу удалить все завершенные дела
   let terminalLengthLs = numOfChecks - arr.length;
 
   for (let i = -1; i < numOfChecks; i++) {

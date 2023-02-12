@@ -3,13 +3,11 @@ const btnDelAll = document.querySelector(".base__delall");
 const btnDel = document.querySelector(".base__del");
 const lists = document.querySelector(".lists");
 const input = document.querySelector(".roof__input");
-const list = document.querySelector(".list");
-const text = document.querySelector(".text");
 const base = document.querySelector(".base");
 const roof = document.querySelector(".roof");
 // создает строку todo-листа с обработчиками закрытия по крестику и выделение завершенных
 function addList() {
-  if (input.value !== "") {
+  if (input.value) {
     let text = input.value;
     const div = document.createElement("div");
     const checkbox = document.createElement("input");
@@ -55,14 +53,6 @@ window.addEventListener("load", () => {
     : ((roof.style = "border-radius: 16px"), (base.style = "opacity: 0;"));
   input.value = "";
 });
-// проверка пустого содержимого input и выдает какое-то сообщение
-function emptyInput() {
-  if (input.value === "") {
-    alert("Полить кактус и погулять с собакой?");
-    roof.style = "border-radius: 16px";
-  }
-}
-btnAdd.addEventListener("click", emptyInput);
 // достает данные из LS(используется при загрузке и перезагрузке страницы)
 function getFromLs() {
   for (let i = 0; i < localStorage.length; i++) {
@@ -73,7 +63,7 @@ function getFromLs() {
 //сохраняет значение input в lS
 function saveInLocalStorage() {
   let realTime = new Date().toLocaleTimeString();
-  if (input.value !== "") {
+  if (input.value) {
     localStorage.setItem("case" + realTime, input.value);
     input.value = "";
   }
@@ -82,7 +72,7 @@ btnAdd.addEventListener("click", saveInLocalStorage);
 // удаляет весь список дел и очищает всё хранилище
 function delAll() {
   let res = confirm("Новая жизнь с чистого листа?");
-  if (res === true) {
+  if (res) {
     lists.style = "display: none";
     localStorage.clear();
     base.style = "opacity: 0;";

@@ -4,13 +4,10 @@ const btnDel = document.querySelector(".base__del");
 const lists = document.querySelector(".lists");
 const input = document.querySelector(".roof__input");
 const list = document.querySelector(".list");
-const cross = document.querySelector(".cross");
-const checkbox = document.querySelector(".checkbox");
 const text = document.querySelector(".text");
 const base = document.querySelector(".base");
-
+const roof = document.querySelector(".roof");
 // создает строку todo-листа с обработчиками закрытия по крестику и выделение завершенных
-
 function addList() {
   if (input.value !== "") {
     let text = input.value;
@@ -42,41 +39,30 @@ function addList() {
     divCross.append(pCross);
     div.append(checkbox, p, divCross);
     lists.style = "padding: 32px 24px;";
-    document.querySelector(".roof").style = "border-radius: 16px 16px 0 0";
+    roof.style = "border-radius: 16px 16px 0 0";
+    base.style = "opacity: 1;";
     lists.append(div);
   }
   return lists;
 }
 btnAdd.addEventListener("click", addList);
-
 // загрузка страницы, достает данные из lS и очищает поле input
-window.addEventListener("load", getFromLs);
 window.addEventListener("load", () => {
+  getFromLs();
+  document.contains(document.querySelector(".list"))
+    ? ((roof.style = "border-radius: 16px 16px 0 0"),
+      (base.style = "opacity: 1;"))
+    : ((roof.style = "border-radius: 16px"), (base.style = "opacity: 0;"));
   input.value = "";
 });
-window.addEventListener("load", () => {
-  if ((lists.style = "padding: 32px 24px;")) {
-    openBase();
-    document.querySelector(".roof").style = "border-radius: 16px 16px 0 0";
-  }
-});
-
 // проверка пустого содержимого input и выдает какое-то сообщение
 function emptyInput() {
   if (input.value === "") {
-    document.querySelector(".roof").style = "border-radius: 16px 16px 0 0";
     alert("Полить кактус и погулять с собакой?");
-    // alert("тут должно было быть очень важное дело, но я его не помню");
+    roof.style = "border-radius: 16px";
   }
 }
 btnAdd.addEventListener("click", emptyInput);
-
-// отображает блок с кнопками
-function openBase() {
-  base.style = "opacity: 1;";
-}
-btnAdd.addEventListener("click", openBase);
-
 // достает данные из LS(используется при загрузке и перезагрузке страницы)
 function getFromLs() {
   for (let i = 0; i < localStorage.length; i++) {
@@ -84,19 +70,15 @@ function getFromLs() {
     addList();
   }
 }
-
 //сохраняет значение input в lS
 function saveInLocalStorage() {
-  let d = new Date();
-  let dReal = d.toLocaleTimeString();
-  let realTime = "case" + dReal;
+  let realTime = new Date().toLocaleTimeString();
   if (input.value !== "") {
-    localStorage.setItem(realTime, input.value);
+    localStorage.setItem("case" + realTime, input.value);
     input.value = "";
   }
 }
 btnAdd.addEventListener("click", saveInLocalStorage);
-
 // удаляет весь список дел и очищает всё хранилище
 function delAll() {
   let res = confirm("Новая жизнь с чистого листа?");
@@ -104,11 +86,10 @@ function delAll() {
     lists.style = "display: none";
     localStorage.clear();
     base.style = "opacity: 0;";
-    document.querySelector(".roof").style = "border-radius: 16px";
+    roof.style = "border-radius: 16px";
   }
 }
 btnDelAll.addEventListener("click", delAll);
-
 // удаляет список завершенных дел из листа на странице браузера
 function delComplitedList() {
   const complited = document.querySelectorAll("div.complited");
@@ -116,7 +97,6 @@ function delComplitedList() {
     document.querySelector(".complited").remove();
   }
 }
-
 // очищает хранилище от значений, соответвующих тексту, завершенных дел
 function cleanLsItem() {
   const complited2 = document.querySelectorAll("div.complited>p");
@@ -125,29 +105,13 @@ function cleanLsItem() {
     complitedCases.push(complited2[i].textContent);
   }
   let arr = [...complitedCases];
-  let numOfChecks = localStorage.length;
-  // какой длины после проверки должно остаться хранилище, переменная понадобится для дополнительного цикла (удаление завершенного), так как одним циклом for не могу удалить все завершенные дела
-  let terminalLengthLs = numOfChecks - arr.length;
-
-  for (let i = -1; i < numOfChecks; i++) {
-    let keyLs = localStorage.key(i);
-    let valueLs = localStorage.getItem(keyLs);
-    if (arr.indexOf(valueLs) !== -1) {
-      localStorage.removeItem(keyLs);
-      numOfChecks--;
-    }
-  }
-  if (localStorage.length > terminalLengthLs) {
-    for (let i = -1; i < numOfChecks; i++) {
-      let keyLs = localStorage.key(i);
-      let valueLs = localStorage.getItem(keyLs);
-      if (arr.indexOf(valueLs) !== -1) {
-        localStorage.removeItem(keyLs);
-        numOfChecks--;
+  for (let keys in localStorage) {
+    for (let i = 0; i < arr.length; i++) {
+      if (localStorage.getItem(keys) === arr[i]) {
+        localStorage.removeItem(keys);
       }
     }
   }
 }
-
 btnDel.addEventListener("click", delComplitedList);
 btnDel.addEventListener("mousedown", cleanLsItem);
